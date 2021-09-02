@@ -157,17 +157,17 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DatotekeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KvarController.cs" />
     <Compile Include="Controllers\StrojController.cs" />
-    <Compile Include="Controllers\StrojDisplayController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Datoteke.cs" />
+    <Compile Include="Models\Datoteka.cs" />
     <Compile Include="Models\Kvar.cs" />
+    <Compile Include="Models\KvarVM.cs" />
     <Compile Include="Models\Stroj.cs" />
-    <Compile Include="Models\StrojContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -213,10 +213,18 @@
     <Content Include="Views\Stroj\Create.cshtml" />
     <Content Include="Views\Kvar\Index.cshtml" />
     <Content Include="Views\Kvar\Create.cshtml" />
-    <Content Include="Views\StrojDisplay\Index.cshtml" />
+    <Content Include="Views\Datoteke\Index.cshtml" />
+    <Content Include="Views\Datoteke\Details.cshtml" />
+    <Content Include="Views\Datoteke\Create.cshtml" />
+    <Content Include="Views\Datoteke\Edit.cshtml" />
+    <Content Include="Views\Kvar\Details.cshtml" />
+    <Content Include="Views\Kvar\Edit.cshtml" />
+    <Content Include="Views\Kvar\Delete.cshtml" />
+    <Content Include="Views\Datoteke\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

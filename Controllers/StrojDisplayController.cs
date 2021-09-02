@@ -14,7 +14,7 @@ namespace StrojeviMVC.Controllers
         public ActionResult Index()
         {
             Stroj s = new Stroj();
-            s.strojList = new SelectList(sc.GetStrojList(), "ID", "Naziv");
+            s.StrojList = new SelectList(sc.GetStrojList(), "ID", "Naziv");
             return View(s);
         }
     }

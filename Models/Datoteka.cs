@@ -5,7 +5,7 @@ using System.Web;
 
 namespace StrojeviMVC.Models
 {
-    public class Datoteke
+    public class Datoteka
     {
         public int Id { get; set; }
         public string Putanja { get; set; }

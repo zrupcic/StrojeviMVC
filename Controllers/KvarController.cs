@@ -25,6 +25,16 @@ namespace StrojeviMVC.Controllers
             return View(KvarList);
         }
 
+        //public ActionResult Index(int status = 1)
+        //{
+        //    List<Kvar> KvarList = new List<Kvar>();
+        //    using (IDbConnection db = new NpgsqlConnection(conStr))
+        //    {
+        //        KvarList = db.Query<Kvar>(string.Format("Select * From Kvarovi where Status=(0) ORDER BY Prioritet, VrijemePrijave", status)).ToList();
+        //    }
+        //    return View(KvarList);
+        //}
+
         /*public ActionResult Index(bool samoNeotklonjeni)
         {
             List<Kvar> KvarList = new List<Kvar>();
@@ -79,16 +89,32 @@ namespace StrojeviMVC.Controllers
         // GET: Kvar/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Kvar kvar = new Kvar();
+            using (IDbConnection db = new NpgsqlConnection(conStr))
+            {
+                kvar = db.Query<Kvar>("Select * From Kvarovi WHERE ID =" + id, new { id }).SingleOrDefault();
+            }
+            return View(kvar);
         }
 
         // POST: Kvar/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Kvar kvar)
         {
             try
             {
-                // TODO: Add update logic here
+                using (IDbConnection db = new NpgsqlConnection(conStr))
+                {
+                    string sqlQuery = "UPDATE Kvarovi set StrojID='" + kvar.StrojID +
+                        "',Naziv='" + kvar.Naziv +
+                        "',Opis='" + kvar.Opis +
+                        "',Prioritet='" + kvar.Prioritet +
+                        "',Status='" + kvar.Status +
+                        "',VrijemPrijave='" + kvar.VrijemePrijave +
+                        "' WHERE ID=" + kvar.Id;
+
+                    int rowsAffected = db.Execute(sqlQuery);
+                }
 
                 return RedirectToAction("Index");
             }
@@ -101,16 +127,26 @@ namespace StrojeviMVC.Controllers
         // GET: Kvar/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Kvar kvar = new Kvar();
+            using (IDbConnection db = new NpgsqlConnection(conStr))
+            {
+                kvar = db.Query<Kvar>("Select * From Kvarovi WHERE ID =" + id, new { id }).SingleOrDefault();
+            }
+            return View(kvar);
         }
 
         // POST: Kvar/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, Kvar kvar)
         {
             try
             {
-                // TODO: Add delete logic here
+                using (IDbConnection db = new NpgsqlConnection(conStr))
+                {
+                    string sqlQuery = "Delete From Kvar WHERE ID = " + kvar.Id;
+
+                    int rowsAffected = db.Execute(sqlQuery);
+                }
 
                 return RedirectToAction("Index");
             }

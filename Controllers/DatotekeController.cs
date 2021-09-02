@@ -1,60 +1,59 @@
-﻿using System;
+﻿using Dapper;
+using Npgsql;
+using StrojeviMVC.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Dapper;
-using Npgsql;
-using StrojeviMVC.Models;
 
 namespace StrojeviMVC.Controllers
 {
-    public class StrojController : Controller
+    public class DatotekeController : Controller
     {
         private readonly string conStr = ConfigurationManager.ConnectionStrings["strojeviConnection"].ConnectionString;
-        // GET: Stroj
+        // GET: Datoteke
         public ActionResult Index()
         {
-            List<Stroj> StrojList = new List<Stroj>();
+            List<Datoteka> DatotekeList = new List<Datoteka>();
             using (IDbConnection db = new NpgsqlConnection(conStr))
             {
 
-                StrojList = db.Query<Stroj>("Select * From Strojevi").ToList();
+                DatotekeList = db.Query<Datoteka>("Select * From Datoteke").ToList();
             }
-            return View(StrojList);
+            return View(DatotekeList);
         }
 
-        // GET: Stroj/Details/5
+        // GET: Datoteke/Details/5
         public ActionResult Details(int id)
         {
-            Stroj stroj = new Stroj();
+            Datoteka datoteke = new Datoteka();
             using (IDbConnection db = new NpgsqlConnection(conStr))
             {
-                stroj = db.Query<Stroj>("Select * From Strojevi WHERE ID =" + id, new { id }).SingleOrDefault();
+                datoteke = db.Query<Datoteka>("Select * From Datoteke WHERE ID =" + id, new { id }).SingleOrDefault();
             }
-            return View(stroj);
+            return View(datoteke);
         }
 
-        // GET: Stroj/Create
+        // GET: Datoteke/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Stroj/Create
+        // POST: Datoteke/Create
         [HttpPost]
-        public ActionResult Create(Stroj stroj)
+        public ActionResult Create(Datoteka datoteka)
         {
             try
             {
                 using (IDbConnection db = new NpgsqlConnection(conStr))
                 {
-                    string sqlQuery = "Insert Into Strojevi (Naziv, Oznaka, DatumNabave) Values(@Naziv, @Oznaka, @DatumNabave)";
+                    string sqlQuery = "Insert Into Datoteke (Putanja, KvarID) Values(@Putanja, @KvarID)";
 
-                    int rowsAffected = db.Execute(sqlQuery, stroj);
+                    int rowsAffected = db.Execute(sqlQuery, datoteka);
                 }
 
                 return RedirectToAction("Index");
@@ -65,29 +64,28 @@ namespace StrojeviMVC.Controllers
             }
         }
 
-        // GET: Stroj/Edit/5
+        // GET: Datoteke/Edit/5
         public ActionResult Edit(int id)
         {
-            Stroj stroj = new Stroj();
+            Datoteka datoteka = new Datoteka();
             using (IDbConnection db = new NpgsqlConnection(conStr))
             {
-                stroj = db.Query<Stroj>("Select * From Strojevi WHERE ID =" + id, new { id }).SingleOrDefault();
+                datoteka = db.Query<Datoteka>("Select * From Datoteke WHERE ID =" + id, new { id }).SingleOrDefault();
             }
-            return View(stroj);
+            return View(datoteka);
         }
 
-        // POST: Stroj/Edit/5
+        // POST: Datoteke/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Stroj stroj)
+        public ActionResult Edit(int id, Datoteka datoteka)
         {
             try
             {
                 using (IDbConnection db = new NpgsqlConnection(conStr))
                 {
-                    string sqlQuery = "UPDATE Strojevi set Naziv='" + stroj.Naziv +
-                        "',Oznaka='" + stroj.Oznaka +
-                        "',DatumNabave='" + stroj.DatumNabave +
-                        "' WHERE ID=" + stroj.Id;
+                    string sqlQuery = "UPDATE Datoteke set Putanja='" + datoteka.Putanja +
+                        "',KvarID='" + datoteka.KvarId +
+                        "' WHERE ID=" + datoteka.Id;
 
                     int rowsAffected = db.Execute(sqlQuery);
                 }
@@ -100,26 +98,26 @@ namespace StrojeviMVC.Controllers
             }
         }
 
-        // GET: Stroj/Delete/5
+        // GET: Datoteke/Delete/5
         public ActionResult Delete(int id)
         {
-            Stroj stroj = new Stroj();
+            Datoteka datoteka = new Datoteka();
             using (IDbConnection db = new NpgsqlConnection(conStr))
             {
-                stroj = db.Query<Stroj>("Select * From Strojevi WHERE ID =" + id, new { id }).SingleOrDefault();
+                datoteka = db.Query<Datoteka>("Select * From Datoteke WHERE ID =" + id, new { id }).SingleOrDefault();
             }
-            return View(stroj);
+            return View(datoteka);
         }
 
-        // POST: Stroj/Delete/5
+        // POST: Datoteke/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, Stroj stroj)
+        public ActionResult Delete(int id, Datoteka datoteka)
         {
             try
             {
                 using (IDbConnection db = new NpgsqlConnection(conStr))
                 {
-                    string sqlQuery = "Delete From Strojevi WHERE ID = " + stroj.Id;
+                    string sqlQuery = "Delete From Datoteke WHERE ID = " + id;
 
                     int rowsAffected = db.Execute(sqlQuery);
                 }
